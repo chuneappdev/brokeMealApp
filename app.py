@@ -11,64 +11,42 @@ app = Flask(__name__)
 # Configure OpenAI API key
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-# Fallback meal suggestions for when API is not available
-FALLBACK_MEALS = {
-    "under_5": [
-        {"name": "Ramen Noodle Upgrade", "ingredients": ["instant ramen", "egg", "any vegetables"], "cost": "$2-3", "instructions": "Cook ramen, add beaten egg while hot, mix in any leftover vegetables"},
-        {"name": "Rice & Bean Bowl", "ingredients": ["rice", "canned beans", "onion", "garlic"], "cost": "$3-4", "instructions": "Cook rice, sauté onion and garlic, mix with heated beans"},
-        {"name": "Pasta with Garlic Oil", "ingredients": ["pasta", "garlic", "olive oil", "parmesan"], "cost": "$2-3", "instructions": "Cook pasta, sauté minced garlic in oil, toss with pasta"},
-        {"name": "Egg Fried Rice", "ingredients": ["rice", "eggs", "soy sauce", "any vegetables"], "cost": "$3-4", "instructions": "Cook rice, scramble eggs, mix together with soy sauce"},
-        {"name": "Grilled Cheese & Soup", "ingredients": ["bread", "cheese", "canned tomato soup"], "cost": "$4-5", "instructions": "Make grilled cheese sandwich, heat soup, enjoy together"}
-    ],
-    "under_10": [
-        {"name": "Chicken Thigh Stir-fry", "ingredients": ["chicken thighs", "mixed vegetables", "rice", "soy sauce"], "cost": "$7-8", "instructions": "Cook chicken thighs, stir-fry with vegetables, serve over rice"},
-        {"name": "Spaghetti with Meat Sauce", "ingredients": ["ground beef", "pasta", "tomato sauce", "onion"], "cost": "$8-9", "instructions": "Brown ground beef with onion, add tomato sauce, serve over pasta"},
-        {"name": "Bean and Cheese Quesadilla", "ingredients": ["tortillas", "cheese", "canned beans", "salsa"], "cost": "$6-7", "instructions": "Fill tortillas with cheese and beans, cook until crispy, serve with salsa"},
-        {"name": "Tuna Pasta Salad", "ingredients": ["pasta", "canned tuna", "mayo", "vegetables"], "cost": "$6-8", "instructions": "Cook pasta, mix with tuna, mayo, and chopped vegetables"},
-        {"name": "Chicken Noodle Soup", "ingredients": ["chicken breast", "noodles", "carrots", "celery", "broth"], "cost": "$8-10", "instructions": "Simmer chicken with vegetables in broth, add noodles last 10 minutes"}
-    ],
-    "under_15": [
-        {"name": "Beef Stir-fry with Vegetables", "ingredients": ["beef strips", "broccoli", "bell peppers", "rice"], "cost": "$12-14", "instructions": "Stir-fry beef until almost done, add vegetables, serve over rice"},
-        {"name": "Salmon with Sweet Potato", "ingredients": ["salmon fillet", "sweet potato", "green beans"], "cost": "$13-15", "instructions": "Bake salmon and sweet potato, steam green beans, season all well"},
-        {"name": "Chicken Parmesan", "ingredients": ["chicken breast", "breadcrumbs", "pasta", "marinara"], "cost": "$11-13", "instructions": "Bread and bake chicken, serve over pasta with marinara sauce"},
-        {"name": "Pork Chops with Rice", "ingredients": ["pork chops", "rice", "green vegetables"], "cost": "$10-12", "instructions": "Pan-fry pork chops, serve with rice and steamed vegetables"},
-        {"name": "Shrimp Pasta", "ingredients": ["shrimp", "pasta", "garlic", "white wine", "parmesan"], "cost": "$13-15", "instructions": "Sauté shrimp with garlic, deglaze with wine, toss with pasta"}
-    ]
-}
+# Fallback meal suggestions based on common ingredients
+FALLBACK_MEALS = [
+    {"name": "Classic Scrambled Eggs", "ingredients": ["eggs", "butter", "salt", "pepper"], "instructions": "Beat eggs, cook in butter over medium heat, stirring gently until fluffy"},
+    {"name": "Simple Pasta", "ingredients": ["pasta", "garlic", "olive oil", "parmesan"], "instructions": "Cook pasta, sauté minced garlic in oil, toss with pasta and cheese"},
+    {"name": "Fried Rice", "ingredients": ["rice", "eggs", "soy sauce", "vegetables"], "instructions": "Cook rice, scramble eggs, mix together with soy sauce and any available vegetables"},
+    {"name": "Grilled Cheese Sandwich", "ingredients": ["bread", "cheese", "butter"], "instructions": "Butter bread, add cheese, cook in pan until golden and cheese melts"},
+    {"name": "Basic Stir-fry", "ingredients": ["vegetables", "oil", "garlic", "soy sauce"], "instructions": "Heat oil, add garlic, stir-fry vegetables until tender, season with soy sauce"},
+    {"name": "Simple Soup", "ingredients": ["broth", "vegetables", "noodles"], "instructions": "Heat broth, add chopped vegetables, simmer until tender, add noodles if available"},
+    {"name": "Omelet", "ingredients": ["eggs", "cheese", "vegetables"], "instructions": "Beat eggs, pour into heated pan, add fillings, fold in half when set"},
+    {"name": "Pasta Salad", "ingredients": ["pasta", "vegetables", "oil", "vinegar"], "instructions": "Cook pasta, cool, mix with chopped vegetables and simple oil-vinegar dressing"},
+    {"name": "Rice Bowl", "ingredients": ["rice", "protein", "vegetables"], "instructions": "Cook rice, prepare protein and vegetables, serve together in a bowl"},
+    {"name": "Sandwich", "ingredients": ["bread", "protein", "vegetables"], "instructions": "Layer ingredients between bread slices, customize with available items"}
+]
 
-def get_budget_category(budget):
-    """Determine budget category based on amount"""
-    if budget < 5:
-        return "under_5"
-    elif budget < 10:
-        return "under_10"
-    else:
-        return "under_15"
-
-def generate_meal_suggestions_gpt(budget, ingredients):
-    """Generate meal suggestions using OpenAI GPT"""
+def generate_meal_suggestions_gpt(ingredients):
+    """Generate meal suggestions using OpenAI GPT based on available ingredients"""
     try:
         if not openai.api_key:
             raise Exception("No OpenAI API key configured")
             
         prompt = f"""
-        I have ${budget} to spend on a meal and these ingredients available: {', '.join(ingredients) if ingredients else 'none specific'}.
+        I have these ingredients available in my fridge/pantry: {', '.join(ingredients) if ingredients else 'basic pantry staples like salt, pepper, oil'}.
         
-        Please suggest 5 cheap, practical meal ideas that fit this budget. For each meal, provide:
+        Please suggest 5 delicious meal ideas I can make with these ingredients. For each meal, provide:
         1. Name of the dish
-        2. Complete ingredient list with estimated costs
-        3. Brief cooking instructions
-        4. Total estimated cost
+        2. Complete ingredient list (using what I have + basic pantry staples)
+        3. Step-by-step cooking instructions
         
-        Focus on simple, nutritious meals that a broke person can actually make. Be realistic about portions and costs.
+        Focus on practical, tasty meals that someone can actually make with these ingredients. Be creative with combinations.
         Format as JSON with this structure:
         {{
             "meals": [
                 {{
                     "name": "dish name",
                     "ingredients": ["ingredient1", "ingredient2"],
-                    "cost": "$X-Y",
-                    "instructions": "step by step instructions"
+                    "instructions": "step by step cooking instructions"
                 }}
             ]
         }}
@@ -77,7 +55,7 @@ def generate_meal_suggestions_gpt(budget, ingredients):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant that suggests budget-friendly meals."},
+                {"role": "system", "content": "You are a helpful cooking assistant that suggests creative meals based on available ingredients."},
                 {"role": "user", "content": prompt}
             ],
             max_tokens=1500,
@@ -96,8 +74,7 @@ def generate_meal_suggestions_gpt(budget, ingredients):
     except Exception as e:
         print(f"Error with OpenAI API: {e}")
         # Fall back to predefined suggestions
-        category = get_budget_category(budget)
-        return FALLBACK_MEALS[category]
+        return FALLBACK_MEALS
 
 @app.route('/')
 def index():
@@ -107,21 +84,19 @@ def index():
 def get_meals():
     try:
         data = request.json
-        budget = float(data.get('budget', 0))
         ingredients = data.get('ingredients', [])
         
         # Clean up ingredients list
         ingredients = [ing.strip() for ing in ingredients if ing.strip()]
         
-        if budget <= 0:
-            return jsonify({'error': 'Please enter a valid budget amount'}), 400
+        if not ingredients:
+            return jsonify({'error': 'Please enter at least one ingredient'}), 400
         
         # Generate meal suggestions
-        meals = generate_meal_suggestions_gpt(budget, ingredients)
+        meals = generate_meal_suggestions_gpt(ingredients)
         
         return jsonify({
             'success': True,
-            'budget': budget,
             'ingredients': ingredients,
             'meals': meals
         })

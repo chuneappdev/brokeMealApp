@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Broke Meal Planner - Cheap Meal Ideas on a Budget</title>
-    <meta name="description" content="Enter your budget and fridge contents to get 5 cheap, delicious meal ideas. Perfect for broke college students and budget-conscious families.">
-    <meta name="keywords" content="cheap meals, budget recipes, broke college student, meal planning, affordable food">
+    <title>Fridge to Fork - What to Cook with Your Ingredients</title>
+    <meta name="description" content="Enter your fridge ingredients and get 5 delicious meal ideas. Perfect recipe suggestions based on what you already have!">
+    <meta name="keywords" content="recipe ideas, cooking with ingredients, what to cook, meal suggestions, fridge ingredients">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://brokemealplanner.com/">
-    <meta property="og:title" content="Broke Meal Planner - Cheap Meal Ideas">
-    <meta property="og:description" content="Get 5 cheap meal ideas based on your budget and ingredients">
+    <meta property="og:url" content="https://fridgetofork.com/">
+    <meta property="og:title" content="Fridge to Fork - Recipe Ideas from Your Ingredients">
+    <meta property="og:description" content="Get 5 delicious meal ideas based on ingredients you already have">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://brokemealplanner.com/">
-    <meta property="twitter:title" content="Broke Meal Planner - Cheap Meal Ideas">
-    <meta property="twitter:description" content="Get 5 cheap meal ideas based on your budget and ingredients">
+    <meta property="twitter:url" content="https://fridgetofork.com/">
+    <meta property="twitter:title" content="Fridge to Fork - Recipe Ideas from Your Ingredients">
+    <meta property="twitter:description" content="Get 5 delicious meal ideas based on ingredients you already have">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -142,49 +142,38 @@
         <div class="card header-card mb-4">
             <div class="card-body">
                 <h1 class="display-4 mb-3">
-                    <i class="fas fa-utensils"></i> Broke Meal Planner
+                    <i class="fas fa-utensils"></i> Fridge to Fork
                 </h1>
-                <p class="lead">Enter your budget and what's in your fridge to get 5 cheap, delicious meal ideas!</p>
-                <p class="mb-0">Perfect for broke college students, tight budgets, and smart meal planning 🍜💰</p>
+                <p class="lead">Tell us what's in your fridge and get 5 delicious meal ideas!</p>
+                <p class="mb-0">Turn your ingredients into amazing recipes �✨</p>
             </div>
         </div>
 
         <!-- Ad Space 1 -->
         <div class="ads-placeholder">
             <i class="fas fa-ad"></i> Advertisement Space - AdSense Integration
-            <br><small>Monetize with food delivery affiliate links & budget app ads</small>
+            <br><small>Monetize with cooking tool affiliate links & recipe app ads</small>
         </div>
 
         <!-- Input Form -->
         <div class="card mb-4">
             <div class="card-body">
                 <h3 class="card-title mb-4">
-                    <i class="fas fa-dollar-sign text-success"></i> What's Your Budget?
+                    <i class="fas fa-refrigerator text-primary"></i> What's in Your Fridge?
                 </h3>
                 
                 <form id="mealForm">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="budget" class="form-label">Budget Amount ($)</label>
-                            <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                <input type="number" class="form-control" id="budget" min="1" max="100" step="0.50" placeholder="5.00" required>
-                            </div>
-                            <div class="form-text">How much can you spend on this meal?</div>
-                        </div>
-                        
-                        <div class="col-md-6 mb-3">
-                            <label for="ingredients" class="form-label">
-                                <i class="fas fa-refrigerator"></i> What's in your fridge? (Optional)
-                            </label>
-                            <textarea class="form-control" id="ingredients" rows="3" placeholder="eggs, rice, onions, cheese, bread..."></textarea>
-                            <div class="form-text">List ingredients you already have (separated by commas)</div>
-                        </div>
+                    <div class="mb-3">
+                        <label for="ingredients" class="form-label">
+                            <i class="fas fa-list"></i> Enter your ingredients
+                        </label>
+                        <textarea class="form-control" id="ingredients" rows="4" placeholder="eggs, chicken, rice, onions, tomatoes, cheese, pasta..." required></textarea>
+                        <div class="form-text">List all ingredients you have available (separated by commas)</div>
                     </div>
                     
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="fas fa-magic"></i> Get My Meal Ideas!
+                            <i class="fas fa-magic"></i> Get My Recipe Ideas!
                         </button>
                     </div>
                 </form>
@@ -196,7 +185,7 @@
             <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="mt-2">Cooking up your perfect meal ideas...</p>
+            <p class="mt-2">Finding the perfect recipes for your ingredients...</p>
         </div>
 
         <!-- Results -->
@@ -204,7 +193,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h3 class="card-title text-center mb-4">
-                        <i class="fas fa-heart text-danger"></i> Your Perfect Meal Ideas
+                        <i class="fas fa-heart text-danger"></i> Your Perfect Recipe Ideas
                     </h3>
                     <div id="mealResults"></div>
                 </div>
@@ -213,52 +202,52 @@
 
         <!-- Ad Space 2 -->
         <div class="ads-placeholder">
-            <i class="fas fa-shopping-cart"></i> Grocery Delivery Affiliate Links
-            <br><small>Instacart • DoorDash • Uber Eats partnerships for ingredient delivery</small>
+            <i class="fas fa-shopping-cart"></i> Cooking & Kitchen Affiliate Links
+            <br><small>Amazon Kitchen Tools • Cookbooks • Ingredient Delivery partnerships</small>
         </div>
 
         <!-- SEO Content -->
         <div class="card mb-4">
             <div class="card-body">
-                <h2>Why Broke Meal Planner?</h2>
+                <h2>Why Fridge to Fork?</h2>
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <h5><i class="fas fa-coins text-warning"></i> Budget-Friendly</h5>
-                        <p>Get delicious meal ideas that won't break the bank. Perfect for college students and tight budgets.</p>
+                        <h5><i class="fas fa-lightbulb text-warning"></i> Smart Cooking</h5>
+                        <p>Get creative recipe ideas using ingredients you already have. No more food waste!</p>
                     </div>
                     <div class="col-md-4 mb-3">
                         <h5><i class="fas fa-clock text-info"></i> Quick & Easy</h5>
-                        <p>Simple recipes with common ingredients that you can make in 30 minutes or less.</p>
+                        <p>Simple recipes with clear instructions that you can make in 30 minutes or less.</p>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <h5><i class="fas fa-leaf text-success"></i> Smart Planning</h5>
-                        <p>Use what you have and minimize food waste while eating well on a budget.</p>
+                        <h5><i class="fas fa-heart text-success"></i> Personalized</h5>
+                        <p>AI-powered suggestions tailored to your specific ingredients and preferences.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Popular Budget Meals -->
+        <!-- Popular Ingredients -->
         <div class="card mb-4">
             <div class="card-body">
-                <h3>Popular Cheap Meal Ideas</h3>
+                <h3>Popular Recipe Combinations</h3>
                 <div class="row">
                     <div class="col-md-6">
-                        <h5>Under $5 Meals:</h5>
+                        <h5>With Eggs:</h5>
                         <ul>
-                            <li>Upgraded Ramen with Egg</li>
-                            <li>Rice & Bean Bowl</li>
-                            <li>Pasta with Garlic Oil</li>
                             <li>Egg Fried Rice</li>
+                            <li>Pasta Carbonara</li>
+                            <li>Vegetable Omelet</li>
+                            <li>Breakfast Sandwich</li>
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <h5>Under $10 Meals:</h5>
+                        <h5>With Chicken:</h5>
                         <ul>
-                            <li>Chicken Thigh Stir-fry</li>
-                            <li>Spaghetti with Meat Sauce</li>
-                            <li>Bean Quesadillas</li>
-                            <li>Tuna Pasta Salad</li>
+                            <li>Chicken Stir-fry</li>
+                            <li>Chicken Pasta</li>
+                            <li>Chicken Soup</li>
+                            <li>Chicken Salad</li>
                         </ul>
                     </div>
                 </div>
@@ -267,10 +256,10 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>&copy; 2025 Broke Meal Planner | Helping people eat well on a budget</p>
+            <p>&copy; 2025 Fridge to Fork | Turn your ingredients into amazing recipes</p>
             <p>
                 <small>
-                    Budget recipes | Cheap meals | College student food | Meal planning on a budget
+                    Recipe ideas | Cooking with ingredients | Meal suggestions | Food inspiration
                 </small>
             </p>
         </div>
@@ -281,12 +270,11 @@
         document.getElementById('mealForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const budget = parseFloat(document.getElementById('budget').value);
             const ingredientsText = document.getElementById('ingredients').value;
             const ingredients = ingredientsText ? ingredientsText.split(',').map(s => s.trim()).filter(s => s) : [];
             
-            if (!budget || budget <= 0) {
-                alert('Please enter a valid budget amount');
+            if (!ingredients.length) {
+                alert('Please enter at least one ingredient');
                 return;
             }
             
@@ -301,7 +289,6 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        budget: budget,
                         ingredients: ingredients
                     })
                 });
@@ -309,24 +296,25 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    displayMeals(data.meals, data.budget);
+                    displayMeals(data.meals, data.ingredients);
                 } else {
-                    throw new Error(data.error || 'Failed to get meals');
+                    throw new Error(data.error || 'Failed to get recipe ideas');
                 }
                 
             } catch (error) {
                 console.error('Error:', error);
-                alert('Sorry, there was an error getting your meal ideas. Please try again.');
+                alert('Sorry, there was an error getting your recipe ideas. Please try again.');
             } finally {
                 document.getElementById('loading').style.display = 'none';
             }
         });
         
-        function displayMeals(meals, budget) {
+        function displayMeals(meals, ingredients) {
             const resultsContainer = document.getElementById('mealResults');
             
             let html = `<div class="alert alert-success text-center mb-4">
-                <h5><i class="fas fa-check-circle"></i> Found ${meals.length} perfect meals for your $${budget} budget!</h5>
+                <h5><i class="fas fa-check-circle"></i> Found ${meals.length} perfect recipes using your ingredients!</h5>
+                <p class="mb-0">Using: ${ingredients.join(', ')}</p>
             </div>`;
             
             meals.forEach((meal, index) => {
@@ -337,7 +325,6 @@
                                 <h5 class="card-title mb-0">
                                     <i class="fas fa-utensils text-primary"></i> ${meal.name}
                                 </h5>
-                                <span class="cost-badge">${meal.cost}</span>
                             </div>
                             
                             <div class="mb-3">
@@ -363,23 +350,23 @@
             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
         }
         
-        // Add some sample budget values for quick selection
+        // Add some sample ingredients for quick testing
         document.addEventListener('DOMContentLoaded', function() {
-            const budgetInput = document.getElementById('budget');
+            const ingredientsInput = document.getElementById('ingredients');
             const quickButtons = document.createElement('div');
             quickButtons.className = 'mt-2';
             quickButtons.innerHTML = `
-                <small class="text-muted">Quick select: </small>
-                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="setBudget(3)">$3</button>
-                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="setBudget(5)">$5</button>
-                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="setBudget(10)">$10</button>
-                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setBudget(15)">$15</button>
+                <small class="text-muted">Quick examples: </small>
+                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="setIngredients('eggs, cheese, bread')">Breakfast</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="setIngredients('chicken, rice, vegetables')">Dinner</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="setIngredients('pasta, tomatoes, garlic')">Italian</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setIngredients('ground beef, onions, potatoes')">Hearty</button>
             `;
-            budgetInput.parentNode.appendChild(quickButtons);
+            ingredientsInput.parentNode.appendChild(quickButtons);
         });
         
-        function setBudget(amount) {
-            document.getElementById('budget').value = amount;
+        function setIngredients(ingredients) {
+            document.getElementById('ingredients').value = ingredients;
         }
     </script>
 </body>

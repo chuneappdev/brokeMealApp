@@ -1,15 +1,15 @@
-# Broke Meal Planner 🍜💰
+# Fridge to Fork �✨
 
-A Flask web application that helps broke college students and budget-conscious people find cheap, delicious meal ideas based on their budget and available ingredients.
+A Flask web application that helps people discover delicious recipe ideas based on ingredients they already have in their fridge or pantry.
 
 ## Features
 
-- 💰 **Budget-Based Meal Planning**: Enter your budget and get meal suggestions that fit
-- 🥘 **Ingredient Integration**: Use what you already have in your fridge
-- 🤖 **AI-Powered Suggestions**: GPT-powered meal recommendations (with fallback options)
+- 🥘 **Ingredient-Based Recipes**: Enter your available ingredients and get personalized meal suggestions
+- 🤖 **AI-Powered Suggestions**: GPT-powered recipe recommendations (with fallback options)
 - 📱 **Mobile-Friendly**: Responsive design that works on all devices
 - 🎯 **SEO Optimized**: Built for high search engine visibility
 - 💸 **Monetization Ready**: AdSense integration and affiliate link support
+- 🌟 **Smart Cooking**: Reduce food waste by using what you already have
 
 ## Live Demo
 
@@ -29,8 +29,8 @@ Visit the app at: [Your Railway URL here]
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/broke-meal-planner.git
-   cd broke-meal-planner
+   git clone https://github.com/chuneappdev/brokeMealApp.git
+   cd brokeMealApp
    ```
 
 2. **Install dependencies**:
@@ -63,36 +63,36 @@ Visit the app at: [Your Railway URL here]
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `OPENAI_API_KEY` | OpenAI API key for GPT meal suggestions | No (fallback available) |
+| `OPENAI_API_KEY` | OpenAI API key for GPT recipe suggestions | No (fallback available) |
 | `FLASK_ENV` | Flask environment (development/production) | No (defaults to production) |
 | `PORT` | Port for the application | No (Railway sets automatically) |
 
 ## How It Works
 
-1. **User Input**: Users enter their budget and available ingredients
-2. **AI Processing**: OpenAI GPT analyzes the input and generates personalized meal suggestions
-3. **Fallback System**: If GPT is unavailable, the app uses curated meal databases
-4. **Results**: Users get 5 meal ideas with ingredients, costs, and cooking instructions
+1. **User Input**: Users enter ingredients they have available
+2. **AI Processing**: OpenAI GPT analyzes the ingredients and generates personalized recipe suggestions
+3. **Fallback System**: If GPT is unavailable, the app uses curated recipe databases
+4. **Results**: Users get 5 recipe ideas with ingredients and cooking instructions
 
 ## Monetization Strategy
 
 ### Google AdSense
-- Food and cooking related ads
-- Budget management tool advertisements
-- College student targeted content
+- Cooking and recipe related ads
+- Kitchen tool advertisements
+- Food-related content
 
 ### Affiliate Marketing
-- **Grocery Delivery**: Instacart, Amazon Fresh, Walmart Grocery
-- **Meal Kits**: HelloFresh, Blue Apron (budget options)
-- **Kitchen Tools**: Amazon affiliate links for basic cooking equipment
-- **Cookbooks**: Budget cookbook recommendations
+- **Kitchen Tools**: Amazon affiliate links for cooking equipment
+- **Cookbooks**: Recipe book recommendations
+- **Ingredient Delivery**: Fresh ingredient delivery services
+- **Meal Kits**: Cooking subscription services
 
 ### Target Keywords
-- "cheap meals for college students"
-- "budget meal planning"
-- "broke recipe ideas"
-- "meals under $5"
-- "budget grocery shopping"
+- "recipe ideas with ingredients"
+- "what to cook with"
+- "fridge ingredients recipes"
+- "cooking with what you have"
+- "meal ideas from ingredients"
 
 ## Features for SEO
 
@@ -107,7 +107,7 @@ Visit the app at: [Your Railway URL here]
 ## File Structure
 
 ```
-broke-meal-planner/
+brokeMealApp/
 │
 ├── app.py                 # Main Flask application
 ├── requirements.txt       # Python dependencies
@@ -126,7 +126,7 @@ broke-meal-planner/
 ## API Endpoints
 
 - `GET /` - Main application page
-- `POST /get_meals` - Get meal suggestions based on budget and ingredients
+- `POST /get_meals` - Get recipe suggestions based on available ingredients
 - `GET /health` - Health check endpoint
 
 ## Contributing
@@ -140,14 +140,15 @@ broke-meal-planner/
 
 ## Future Enhancements
 
-- [ ] User accounts and meal history
-- [ ] Shopping list generation
+- [ ] User accounts and recipe favorites
+- [ ] Shopping list generation for missing ingredients
 - [ ] Nutritional information
-- [ ] Meal prep planning
-- [ ] Social sharing features
+- [ ] Dietary restriction filters
 - [ ] Recipe ratings and reviews
+- [ ] Social sharing features
 - [ ] Multi-language support
 - [ ] Mobile app version
+- [ ] Recipe photo uploads
 
 ## License
 
@@ -163,4 +164,4 @@ If you find this project helpful, consider:
 
 ---
 
-Built with ❤️ for broke college students everywhere 🎓💸
+Built with ❤️ for home cooks everywhere 👩‍��‍🍳
