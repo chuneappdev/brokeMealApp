@@ -13,16 +13,24 @@ client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 # Fallback meal suggestions based on common ingredients
 FALLBACK_MEALS = [
-    {"name": "Classic Scrambled Eggs", "ingredients": ["eggs", "butter", "salt", "pepper"], "instructions": "Beat eggs, cook in butter over medium heat, stirring gently until fluffy"},
-    {"name": "Simple Pasta", "ingredients": ["pasta", "garlic", "olive oil", "parmesan"], "instructions": "Cook pasta, sauté minced garlic in oil, toss with pasta and cheese"},
-    {"name": "Fried Rice", "ingredients": ["rice", "eggs", "soy sauce", "vegetables"], "instructions": "Cook rice, scramble eggs, mix together with soy sauce and any available vegetables"},
-    {"name": "Grilled Cheese Sandwich", "ingredients": ["bread", "cheese", "butter"], "instructions": "Butter bread, add cheese, cook in pan until golden and cheese melts"},
-    {"name": "Basic Stir-fry", "ingredients": ["vegetables", "oil", "garlic", "soy sauce"], "instructions": "Heat oil, add garlic, stir-fry vegetables until tender, season with soy sauce"},
-    {"name": "Simple Soup", "ingredients": ["broth", "vegetables", "noodles"], "instructions": "Heat broth, add chopped vegetables, simmer until tender, add noodles if available"},
-    {"name": "Omelet", "ingredients": ["eggs", "cheese", "vegetables"], "instructions": "Beat eggs, pour into heated pan, add fillings, fold in half when set"},
-    {"name": "Pasta Salad", "ingredients": ["pasta", "vegetables", "oil", "vinegar"], "instructions": "Cook pasta, cool, mix with chopped vegetables and simple oil-vinegar dressing"},
-    {"name": "Rice Bowl", "ingredients": ["rice", "protein", "vegetables"], "instructions": "Cook rice, prepare protein and vegetables, serve together in a bowl"},
-    {"name": "Sandwich", "ingredients": ["bread", "protein", "vegetables"], "instructions": "Layer ingredients between bread slices, customize with available items"}
+    {
+        "name": "Classic Scrambled Eggs", 
+        "ingredients": ["eggs", "butter", "salt", "pepper"], 
+        "instructions": "Beat eggs, cook in butter over medium heat, stirring gently until fluffy",
+        "detailed_instructions": "Prep Time: 2 minutes | Cook Time: 5 minutes | Serves: 2\n\n1. Crack 4-6 eggs into a bowl and beat with a fork until well combined\n2. Add a pinch of salt and pepper to taste\n3. Heat 1 tablespoon butter in a non-stick pan over medium-low heat\n4. Pour in beaten eggs and let sit for 20 seconds\n5. Using a spatula, gently stir and fold the eggs from the edges toward the center\n6. Continue stirring gently every 20-30 seconds until eggs are creamy and just set\n7. Remove from heat while slightly underdone (they'll continue cooking)\n8. Serve immediately\n\nTip: Low heat is key for creamy scrambled eggs!"
+    },
+    {
+        "name": "Simple Pasta", 
+        "ingredients": ["pasta", "garlic", "olive oil", "parmesan"], 
+        "instructions": "Cook pasta, sauté minced garlic in oil, toss with pasta and cheese",
+        "detailed_instructions": "Prep Time: 5 minutes | Cook Time: 12 minutes | Serves: 4\n\n1. Bring a large pot of salted water to boil\n2. Add 1 lb pasta and cook according to package directions until al dente\n3. While pasta cooks, heat 1/4 cup olive oil in a large pan over medium heat\n4. Add 4 minced garlic cloves and cook for 1-2 minutes until fragrant (don't brown)\n5. Reserve 1/2 cup pasta water before draining\n6. Drain pasta and add to the garlic oil pan\n7. Toss with pasta water as needed to create a silky sauce\n8. Remove from heat, add 1/2 cup grated parmesan\n9. Toss until cheese melts and coats pasta\n\nTip: Save pasta water - the starch helps bind the sauce!"
+    },
+    {
+        "name": "Fried Rice", 
+        "ingredients": ["rice", "eggs", "soy sauce", "vegetables"], 
+        "instructions": "Cook rice, scramble eggs, mix together with soy sauce and any available vegetables",
+        "detailed_instructions": "Prep Time: 10 minutes | Cook Time: 15 minutes | Serves: 4\n\n1. Use 3 cups of day-old cooked rice (or cool fresh rice completely)\n2. Heat 2 tbsp oil in a large wok or pan over high heat\n3. Beat 2-3 eggs and scramble in the pan, breaking into small pieces\n4. Remove eggs and set aside\n5. Add 1 tbsp more oil, then add diced vegetables (onions first, then harder veggies)\n6. Stir-fry vegetables for 2-3 minutes until tender-crisp\n7. Add rice, breaking up any clumps with a spatula\n8. Stir-fry for 3-4 minutes until rice is heated through\n9. Return eggs to pan, add 2-3 tbsp soy sauce\n10. Toss everything together and serve hot\n\nTip: Day-old rice works best - fresh rice can get mushy!"
+    }
 ]
 
 def generate_meal_suggestions_gpt(ingredients):
@@ -37,7 +45,8 @@ def generate_meal_suggestions_gpt(ingredients):
         Please suggest 5 delicious meal ideas I can make with these ingredients. For each meal, provide:
         1. Name of the dish
         2. Complete ingredient list (using what I have + basic pantry staples)
-        3. Step-by-step cooking instructions
+        3. Brief cooking instructions for the main display
+        4. Detailed step-by-step cooking instructions for copying (include prep time, cook time, serving size, tips)
         
         Focus on practical, tasty meals that someone can actually make with these ingredients. Be creative with combinations.
         Format as JSON with this structure:
@@ -46,7 +55,8 @@ def generate_meal_suggestions_gpt(ingredients):
                 {{
                     "name": "dish name",
                     "ingredients": ["ingredient1", "ingredient2"],
-                    "instructions": "step by step cooking instructions"
+                    "instructions": "brief cooking instructions for display",
+                    "detailed_instructions": "detailed step-by-step instructions with prep time, cook time, serving size, and helpful tips"
                 }}
             ]
         }}
@@ -55,10 +65,10 @@ def generate_meal_suggestions_gpt(ingredients):
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful cooking assistant that suggests creative meals based on available ingredients."},
+                {"role": "system", "content": "You are a professional chef assistant that provides detailed, easy-to-follow cooking instructions. Always include prep time, cook time, serving size, and helpful tips in your detailed instructions."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=1500,
+            max_tokens=2500,
             temperature=0.7
         )
         

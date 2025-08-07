@@ -3,16 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>        <!-- Header -->
-        <div class="card header-card mb-4">
-            <div class="card-body">
-                <h1 class="display-4 mb-3">
-                    <i class="fas fa-utensils"></i> Fridge 2 Plate
-                </h1>
-                <p class="lead">Tell us what's in your fridge and get 5 delicious meal ideas!</p>
-                <p class="mb-0">Turn your ingredients into amazing recipes 🍳✨</p>
-            </div>
-        </div>late - What to Cook with Your Ingredients</title>
+    <title>Fridge 2 Plate - What to Cook with Your Ingredients</title>
     <meta name="description" content="Enter your fridge ingredients and get 5 delicious meal ideas. Perfect recipe suggestions based on what you already have!">
     <meta name="keywords" content="recipe ideas, cooking with ingredients, what to cook, meal suggestions, fridge ingredients">
     
@@ -32,25 +23,52 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #f5f2e8 0%, #e8dcc0 50%, #d4c4a0 100%);
+            background: #d4c4a0 100%;
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 70%;
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 80%;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                max-width: 85%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                max-width: 95%;
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                max-width: 100%;
+                padding: 5px;
+            }
         }
         
         .card {
             border: none;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(139, 127, 108, 0.15);
+            
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
+            background: #d4c4a0 100%;
+
         }
         
         .header-card {
-            background: linear-gradient(45deg, #d4c4a0, #c9b896);
+            background:  #d4c4a0;
             color: #5a4a3a;
             text-align: center;
         }
@@ -60,6 +78,8 @@
             border-left: 4px solid #c9b896;
             transition: transform 0.2s, box-shadow 0.2s;
             background: #fefdfb;
+            cursor: pointer;
+            position: relative;
         }
         
         .meal-card:hover {
@@ -67,6 +87,33 @@
             box-shadow: 0 8px 25px rgba(139, 127, 108, 0.2);
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { 
+                opacity: 0; 
+                transform: translateX(100px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideOut {
+            from { 
+                opacity: 1; 
+                transform: translateX(0);
+            }
+            to { 
+                opacity: 0; 
+                transform: translateX(100px);
+            }
+        }
+       
         .btn-primary {
             background: linear-gradient(45deg, #c9b896, #b8a586);
             border: none;
@@ -151,15 +198,67 @@
             color: #5a4a3a;
         }
         
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
+        /* Modal Styles */
+        .recipe-modal {
+            background-color: rgba(90, 74, 58, 0.8);
+        }
+        
+        .recipe-modal .modal-content {
+            background: #fefdfb;
+            border: none;
+            border-radius: 15px;
+            border: 2px solid #d4c4a0;
+        }
+        
+        .recipe-modal .modal-header {
+            background: linear-gradient(45deg, #d4c4a0, #c9b896);
+            color: #5a4a3a;
+            border-bottom: none;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .recipe-modal .modal-title {
+            font-weight: 600;
+        }
+        
+        .recipe-text-area {
+            background: #f8f6f1;
+            border: 2px solid #e8dcc0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            resize: none;
+            color: #5a4a3a;
+        }
+        
+        .recipe-text-area:focus {
+            border-color: #c9b896;
+            box-shadow: 0 0 0 0.2rem rgba(201, 184, 150, 0.25);
+            outline: none;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(45deg, #c9b896, #b8a586);
+            border: none;
+            border-radius: 25px;
+            color: #5a4a3a;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: linear-gradient(45deg, #b8a586, #a69476);
+            color: #4a3a2a;
+            transform: translateY(-2px);
+        }
+        
+        .copy-success {
+            color: #28a745 !important;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <div class="container py-4">
+    <div class=" container py-4">
         <!-- Header -->
         <div class="card header-card mb-4">
             <div class="card-body">
@@ -171,15 +270,9 @@
             </div>
         </div>
 
-        <!-- Ad Space 1 -->
-        <div class="ads-placeholder">
-            <i class="fas fa-ad"></i> Advertisement Space - AdSense Integration
-            <br><small>Monetize with cooking tool affiliate links & recipe app ads</small>
-        </div>
-
         <!-- Input Form -->
-        <div class="card mb-4">
-            <div class="card-body">
+        <div class="card mb-4" style="align-items: center;">
+            <div class="card-body" style="max-width: 85%; ;">
                 <h3 class="card-title mb-4">
                     <i class="fas fa-refrigerator text-primary"></i> What's in Your Fridge?
                 </h3>
@@ -189,8 +282,20 @@
                         <label for="ingredients" class="form-label">
                             <i class="fas fa-list"></i> Enter your ingredients
                         </label>
-                        <textarea class="form-control" id="ingredients" rows="4" placeholder="eggs, chicken, rice, onions, tomatoes, cheese, pasta..." required></textarea>
-                        <div class="form-text">List all ingredients you have available (separated by commas)</div>
+                        <div class="mx-auto" style="max-width: 100%;">
+                            <textarea class="form-control" id="ingredients" rows="4" placeholder="..." required></textarea>
+                        </div>
+                        <div id="ingredientPreview" class="mt-2 text-center" style="display: none;">
+                            <small class="text-muted">
+                                <i class="fas fa-eye"></i> Detected ingredients: <span id="previewText" class="fw-bold text-primary"></span>
+                            </small>
+                        </div>
+                        <div class="mt-2 text-center">
+                            <small class="text-muted">
+                                <i class="fas fa-lightbulb"></i> 
+                                <strong>Examples:</strong> "eggs chicken rice"
+                            </small>
+                        </div>
                     </div>
                     
                     <div class="text-center">
@@ -276,6 +381,48 @@
             </div>
         </div>
 
+        <!-- Ad Space 1 -->
+        <div class="ads-placeholder">
+            <i class="fas fa-ad"></i> Advertisement Space - AdSense Integration
+            <br><small>Monetize with cooking tool affiliate links & recipe app ads</small>
+        </div>
+
+        <!-- Recipe Modal -->
+        <div class="modal fade recipe-modal" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="recipeModalLabel">
+                            <i class="fas fa-clipboard"></i> Copy Recipe
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="recipeTextArea" class="form-label">
+                                <i class="fas fa-copy"></i> Detailed Recipe Instructions - Ready to Copy:
+                            </label>
+                            <div class="alert alert-info text-center mb-2">
+                                <small><i class="fas fa-lightbulb"></i> This contains detailed instructions with prep time, cook time, and helpful tips!</small>
+                            </div>
+                            <textarea class="form-control recipe-text-area" id="recipeTextArea" rows="18" readonly></textarea>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn copy-btn btn-lg" id="copyRecipeBtn">
+                                <i class="fas fa-copy"></i> Copy to Clipboard
+                            </button>
+                            <small class="text-center text-muted">
+                                You can paste this recipe anywhere - notes app, email, shopping list, etc.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <div class="footer">
             <p>&copy; 2025 Fridge 2 Plate | Turn your ingredients into amazing recipes</p>
@@ -293,7 +440,16 @@
             e.preventDefault();
             
             const ingredientsText = document.getElementById('ingredients').value;
-            const ingredients = ingredientsText ? ingredientsText.split(',').map(s => s.trim()).filter(s => s) : [];
+            
+            // Smart parsing: if there are commas, split by comma; otherwise split by space
+            let ingredients = [];
+            if (ingredientsText.includes(',')) {
+                // Split by comma and clean up
+                ingredients = ingredientsText.split(',').map(s => s.trim()).filter(s => s);
+            } else {
+                // Split by spaces and clean up
+                ingredients = ingredientsText.split(/\s+/).map(s => s.trim()).filter(s => s);
+            }
             
             if (!ingredients.length) {
                 alert('Please enter at least one ingredient');
@@ -331,22 +487,53 @@
             }
         });
         
+        // Real-time ingredient parsing preview
+        document.getElementById('ingredients').addEventListener('input', function() {
+            const ingredientsText = this.value.trim();
+            const preview = document.getElementById('ingredientPreview');
+            const previewText = document.getElementById('previewText');
+            
+            if (ingredientsText) {
+                // Parse ingredients the same way as in form submission
+                let ingredients = [];
+                if (ingredientsText.includes(',')) {
+                    ingredients = ingredientsText.split(',').map(s => s.trim()).filter(s => s);
+                } else {
+                    ingredients = ingredientsText.split(/\s+/).map(s => s.trim()).filter(s => s);
+                }
+                
+                if (ingredients.length > 0) {
+                    previewText.textContent = ingredients.join(', ') + ` (${ingredients.length} ingredient${ingredients.length > 1 ? 's' : ''})`;
+                    preview.style.display = 'block';
+                } else {
+                    preview.style.display = 'none';
+                }
+            } else {
+                preview.style.display = 'none';
+            }
+        });
+        
         function displayMeals(meals, ingredients) {
             const resultsContainer = document.getElementById('mealResults');
             
+            // Store meals data globally for modal access
+            window.currentMeals = meals;
+            
             let html = `<div class="alert alert-success text-center mb-4">
                 <h5><i class="fas fa-check-circle"></i> Found ${meals.length} perfect recipes using your ingredients!</h5>
-                <p class="mb-0">Using: ${ingredients.join(', ')}</p>
+                <p class="mb-0">Using: <span class="fw-bold">${ingredients.join(', ')}</span></p>
+                <small class="text-muted">(${ingredients.length} ingredient${ingredients.length > 1 ? 's' : ''} detected)</small>
             </div>`;
             
             meals.forEach((meal, index) => {
                 html += `
-                    <div class="meal-card card">
+                    <div class="meal-card card clickable-recipe-card" data-meal-index="${index}">
                         <div class="card-body">
-                            <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
                                 <h5 class="card-title mb-0">
                                     <i class="fas fa-utensils text-primary"></i> ${meal.name}
                                 </h5>
+                                
                             </div>
                             
                             <div class="mb-3">
@@ -360,6 +547,12 @@
                                 <h6><i class="fas fa-book-open"></i> Instructions:</h6>
                                 <p class="text-muted">${meal.instructions}</p>
                             </div>
+                            
+                            <div class="text-center mt-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-hand-pointer"></i> Click anywhere on this card to copy the recipe
+                                </small>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -368,9 +561,171 @@
             resultsContainer.innerHTML = html;
             document.getElementById('results').style.display = 'block';
             
+            // Add event listeners to copy buttons
+            document.querySelectorAll('.copy-recipe-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent card click event
+                    const mealIndex = parseInt(this.getAttribute('data-meal-index'));
+                    const meal = window.currentMeals[mealIndex];
+                    openRecipeModal(meal.name, meal.ingredients, meal.instructions, meal.detailed_instructions);
+                });
+            });
+            
+            // Add event listeners to clickable recipe cards
+            document.querySelectorAll('.clickable-recipe-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const mealIndex = parseInt(this.getAttribute('data-meal-index'));
+                    const meal = window.currentMeals[mealIndex];
+                    openRecipeModal(meal.name, meal.ingredients, meal.instructions, meal.detailed_instructions);
+                });
+            });
+            
             // Scroll to results
             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
         }
+        
+        // Modal functionality for copying recipes
+        function openRecipeModal(recipeName, ingredients, instructions, detailedInstructions) {
+            // Use detailed instructions if available, otherwise fall back to regular instructions
+            const instructionsToUse = detailedInstructions || instructions;
+            
+            // Format the recipe text for copying
+            const recipeText = formatRecipeForCopy(recipeName, ingredients, instructionsToUse);
+            
+            // Populate the textarea
+            document.getElementById('recipeTextArea').value = recipeText;
+            
+            // Update modal title
+            document.getElementById('recipeModalLabel').innerHTML = `<i class="fas fa-clipboard"></i> Copy Recipe: ${recipeName}`;
+            
+            // Show the modal
+            const modal = new bootstrap.Modal(document.getElementById('recipeModal'));
+            modal.show();
+            
+            // Auto-select all text when modal opens for easier copying
+            setTimeout(() => {
+                const textarea = document.getElementById('recipeTextArea');
+                textarea.select();
+                textarea.setSelectionRange(0, 99999); // For mobile devices
+            }, 300);
+        }
+        
+        function formatRecipeForCopy(recipeName, ingredients, instructions) {
+            const formattedIngredients = ingredients.map((ing, index) => `${index + 1}. ${ing}`).join('\n');
+            
+            return `🍳 ${recipeName}
+═══════════════════════════════════════
+
+📋 INGREDIENTS:
+${formattedIngredients}
+
+📖 INSTRUCTIONS:
+${instructions}
+
+═══════════════════════════════════════
+Generated by Fridge 2 Plate 🍽️
+Visit: https://fridge2plate.com`;
+        }
+        
+        // Copy to clipboard functionality
+        document.getElementById('copyRecipeBtn').addEventListener('click', async function() {
+            const textarea = document.getElementById('recipeTextArea');
+            const copyBtn = this;
+            const originalText = copyBtn.innerHTML;
+            
+            try {
+                // Modern browsers
+                await navigator.clipboard.writeText(textarea.value);
+                
+                // Success feedback
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied Successfully!';
+                copyBtn.classList.add('copy-success');
+                copyBtn.style.background = '#28a745';
+                copyBtn.style.color = 'white';
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.classList.remove('copy-success');
+                    copyBtn.style.background = '';
+                    copyBtn.style.color = '';
+                }, 3000);
+                
+            } catch (err) {
+                // Fallback for older browsers
+                textarea.select();
+                textarea.setSelectionRange(0, 99999);
+                
+                try {
+                    document.execCommand('copy');
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied Successfully!';
+                    copyBtn.classList.add('copy-success');
+                    copyBtn.style.background = '#28a745';
+                    copyBtn.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.classList.remove('copy-success');
+                        copyBtn.style.background = '';
+                        copyBtn.style.color = '';
+                    }, 3000);
+                } catch (fallbackErr) {
+                    copyBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Please select and copy manually';
+                    copyBtn.style.background = '#dc3545';
+                    copyBtn.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.style.background = '';
+                        copyBtn.style.color = '';
+                    }, 3000);
+                }
+            }
+        });
+        
+        // Add auto-copy functionality when modal opens
+        let autoRecipeText = '';
+        window.addEventListener('DOMContentLoaded', function() {
+            const recipeModal = document.getElementById('recipeModal');
+            if (recipeModal) {
+                recipeModal.addEventListener('shown.bs.modal', async function() {
+                    const textarea = document.getElementById('recipeTextArea');
+                    autoRecipeText = textarea.value;
+                    
+                    // Show a subtle notification that text is ready to copy
+                    const notification = document.createElement('div');
+                    notification.innerHTML = '<i class="fas fa-info-circle"></i> Recipe text is selected and ready to copy!';
+                    notification.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: rgba(201, 184, 150, 0.95);
+                        color: #5a4a3a;
+                        padding: 10px 15px;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        font-weight: 600;
+                        z-index: 9999;
+                        animation: slideIn 0.3s ease-out;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    `;
+                    
+                    document.body.appendChild(notification);
+                    
+                    // Remove notification after 3 seconds
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.style.animation = 'slideOut 0.3s ease-in';
+                            setTimeout(() => {
+                                if (notification.parentNode) {
+                                    notification.parentNode.removeChild(notification);
+                                }
+                            }, 300);
+                        }
+                    }, 3000);
+                });
+            }
+        });
     </script>
 </body>
 </html>
