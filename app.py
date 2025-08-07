@@ -14,7 +14,12 @@ if os.getenv('RAILWAY_ENVIRONMENT') == 'production':
     app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 # Configure OpenAI client
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+api_key = os.getenv('OPENAI_API_KEY')
+if api_key:
+    client = OpenAI(api_key=api_key)
+else:
+    client = None
+    print("Warning: OPENAI_API_KEY not found. App will use fallback meals only.")
 
 # Fallback meal suggestions based on common ingredients
 FALLBACK_MEALS = [
@@ -35,14 +40,33 @@ FALLBACK_MEALS = [
         "ingredients": ["rice", "eggs", "soy sauce", "vegetables"], 
         "instructions": "Cook rice, scramble eggs, mix together with soy sauce and any available vegetables",
         "detailed_instructions": "Prep Time: 10 minutes | Cook Time: 15 minutes | Serves: 4\n\n1. Use 3 cups of day-old cooked rice (or cool fresh rice completely)\n2. Heat 2 tbsp oil in a large wok or pan over high heat\n3. Beat 2-3 eggs and scramble in the pan, breaking into small pieces\n4. Remove eggs and set aside\n5. Add 1 tbsp more oil, then add diced vegetables (onions first, then harder veggies)\n6. Stir-fry vegetables for 2-3 minutes until tender-crisp\n7. Add rice, breaking up any clumps with a spatula\n8. Stir-fry for 3-4 minutes until rice is heated through\n9. Return eggs to pan, add 2-3 tbsp soy sauce\n10. Toss everything together and serve hot\n\nTip: Day-old rice works best - fresh rice can get mushy!"
+    },
+    {
+        "name": "Grilled Cheese Sandwich", 
+        "ingredients": ["bread", "cheese", "butter"], 
+        "instructions": "Butter bread, add cheese, cook in pan until golden and cheese melts",
+        "detailed_instructions": "Prep Time: 3 minutes | Cook Time: 6 minutes | Serves: 1\n\n1. Heat a non-stick pan or skillet over medium heat\n2. Butter one side of each bread slice generously\n3. Place one slice butter-side down in the pan\n4. Add your favorite cheese on top (cheddar, swiss, or american work great)\n5. Top with second bread slice, butter-side up\n6. Cook for 2-3 minutes until golden brown on bottom\n7. Flip carefully with spatula and cook 2-3 minutes more\n8. Remove when both sides are golden and cheese is melted\n9. Let cool for 1 minute, then cut diagonally\n\nTip: Medium heat prevents burning while ensuring the cheese melts completely!"
+    },
+    {
+        "name": "Basic Stir-fry", 
+        "ingredients": ["vegetables", "oil", "garlic", "soy sauce"], 
+        "instructions": "Heat oil, add garlic, stir-fry vegetables until tender, season with soy sauce",
+        "detailed_instructions": "Prep Time: 8 minutes | Cook Time: 8 minutes | Serves: 3-4\n\n1. Prep all vegetables by cutting into similar-sized pieces\n2. Heat 2 tbsp oil in a large wok or pan over high heat\n3. Add 2-3 minced garlic cloves, stir for 30 seconds\n4. Add harder vegetables first (carrots, bell peppers, broccoli)\n5. Stir-fry for 2-3 minutes until slightly tender\n6. Add softer vegetables (zucchini, mushrooms, greens)\n7. Continue stir-frying for 2-3 minutes more\n8. Add 2-3 tbsp soy sauce and toss to coat\n9. Taste and adjust seasoning\n10. Serve immediately over rice or noodles\n\nTip: Keep ingredients moving in the pan for even cooking!"
+    },
+    {
+        "name": "Vegetable Omelet", 
+        "ingredients": ["eggs", "cheese", "vegetables", "butter"], 
+        "instructions": "Beat eggs, pour into heated pan, add fillings, fold in half when set",
+        "detailed_instructions": "Prep Time: 5 minutes | Cook Time: 8 minutes | Serves: 2\n\n1. Beat 4-6 eggs in a bowl with salt and pepper\n2. Prep vegetables: dice onions, bell peppers, mushrooms, etc.\n3. Heat 1 tbsp butter in a non-stick pan over medium heat\n4. Sauté vegetables for 2-3 minutes until softened\n5. Pour beaten eggs over vegetables\n6. Let eggs set on bottom for 2 minutes without stirring\n7. Add cheese to one half of the omelet\n8. Using a spatula, gently fold omelet in half\n9. Cook 1-2 minutes more until cheese melts\n10. Slide onto plate and serve hot\n\nTip: Don't overfill or the omelet will be hard to fold!"
     }
 ]
 
 def generate_meal_suggestions_gpt(ingredients):
     """Generate meal suggestions using OpenAI GPT based on available ingredients"""
     try:
-        if not client.api_key:
-            raise Exception("No OpenAI API key configured")
+        if not client or not client.api_key:
+            print("No OpenAI API key configured, using fallback meals")
+            return FALLBACK_MEALS[:5]  # Return first 5 fallback meals
             
         prompt = f"""
         I have these ingredients available in my fridge/pantry: {', '.join(ingredients) if ingredients else 'basic pantry staples like salt, pepper, oil'}.
