@@ -3,27 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fridge to Fork - What to Cook with Your Ingredients</title>
+    <title>        <!-- Header -->
+        <div class="card header-card mb-4">
+            <div class="card-body">
+                <h1 class="display-4 mb-3">
+                    <i class="fas fa-utensils"></i> Fridge 2 Plate
+                </h1>
+                <p class="lead">Tell us what's in your fridge and get 5 delicious meal ideas!</p>
+                <p class="mb-0">Turn your ingredients into amazing recipes 🍳✨</p>
+            </div>
+        </div>late - What to Cook with Your Ingredients</title>
     <meta name="description" content="Enter your fridge ingredients and get 5 delicious meal ideas. Perfect recipe suggestions based on what you already have!">
     <meta name="keywords" content="recipe ideas, cooking with ingredients, what to cook, meal suggestions, fridge ingredients">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fridgetofork.com/">
-    <meta property="og:title" content="Fridge to Fork - Recipe Ideas from Your Ingredients">
+    <meta property="og:url" content="https://fridge2plate.com/">
+    <meta property="og:title" content="Fridge 2 Plate - Recipe Ideas from Your Ingredients">
     <meta property="og:description" content="Get 5 delicious meal ideas based on ingredients you already have">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://fridgetofork.com/">
-    <meta property="twitter:title" content="Fridge to Fork - Recipe Ideas from Your Ingredients">
+    <meta property="twitter:url" content="https://fridge2plate.com/">
+    <meta property="twitter:title" content="Fridge 2 Plate - Recipe Ideas from Your Ingredients">
     <meta property="twitter:description" content="Get 5 delicious meal ideas based on ingredients you already have">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f5f2e8 0%, #e8dcc0 50%, #d4c4a0 100%);
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -35,58 +44,55 @@
         .card {
             border: none;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(139, 127, 108, 0.15);
             backdrop-filter: blur(10px);
-            background: rgba(255,255,255,0.95);
+            background: rgba(255, 255, 255, 0.95);
         }
         
         .header-card {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
+            background: linear-gradient(45deg, #d4c4a0, #c9b896);
+            color: #5a4a3a;
             text-align: center;
         }
         
         .meal-card {
             margin-bottom: 15px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #c9b896;
             transition: transform 0.2s, box-shadow 0.2s;
+            background: #fefdfb;
         }
         
         .meal-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(139, 127, 108, 0.2);
         }
         
         .btn-primary {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(45deg, #c9b896, #b8a586);
             border: none;
             border-radius: 25px;
             padding: 10px 30px;
             font-weight: 600;
             transition: all 0.3s;
+            color: #5a4a3a;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(139, 127, 108, 0.3);
+            background: linear-gradient(45deg, #b8a586, #a69476);
+            color: #4a3a2a;
         }
         
         .ingredient-tag {
-            background: #e9ecef;
-            color: #495057;
+            background: #f0ebe1;
+            color: #6b5b4b;
             padding: 3px 8px;
             border-radius: 12px;
             font-size: 0.8em;
             margin: 2px;
             display: inline-block;
-        }
-        
-        .cost-badge {
-            background: linear-gradient(45deg, #2ecc71, #27ae60);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-weight: bold;
+            border: 1px solid #e0d5c1;
         }
         
         .loading {
@@ -96,22 +102,22 @@
         }
         
         .spinner-border {
-            color: #667eea;
+            color: #c9b896;
         }
         
         .ads-placeholder {
-            background: #f8f9fa;
-            border: 2px dashed #dee2e6;
+            background: #f8f6f1;
+            border: 2px dashed #d4c4a0;
             border-radius: 10px;
             padding: 20px;
             text-align: center;
-            color: #6c757d;
+            color: #8a7a6a;
             margin: 20px 0;
         }
         
         .footer {
-            background: rgba(255,255,255,0.1);
-            color: white;
+            background: rgba(212, 196, 160, 0.3);
+            color: #5a4a3a;
             text-align: center;
             padding: 20px;
             margin-top: 50px;
@@ -120,13 +126,29 @@
         
         .form-control {
             border-radius: 10px;
-            border: 2px solid #e9ecef;
+            border: 2px solid #e8dcc0;
             transition: border-color 0.3s;
+            background: #fefdfb;
         }
         
         .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            border-color: #c9b896;
+            box-shadow: 0 0 0 0.2rem rgba(201, 184, 150, 0.25);
+            background: #ffffff;
+        }
+        
+        .text-primary {
+            color: #8a7a6a !important;
+        }
+        
+        .alert-success {
+            background-color: #f0ebe1;
+            border-color: #d4c4a0;
+            color: #6b5b4b;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: #5a4a3a;
         }
         
         @media (max-width: 768px) {
@@ -209,7 +231,7 @@
         <!-- SEO Content -->
         <div class="card mb-4">
             <div class="card-body">
-                <h2>Why Fridge to Fork?</h2>
+                <h2>Why Fridge 2 Plate?</h2>
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <h5><i class="fas fa-lightbulb text-warning"></i> Smart Cooking</h5>
@@ -256,7 +278,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>&copy; 2025 Fridge to Fork | Turn your ingredients into amazing recipes</p>
+            <p>&copy; 2025 Fridge 2 Plate | Turn your ingredients into amazing recipes</p>
             <p>
                 <small>
                     Recipe ideas | Cooking with ingredients | Meal suggestions | Food inspiration
@@ -321,7 +343,7 @@
                 html += `
                     <div class="meal-card card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="mb-3">
                                 <h5 class="card-title mb-0">
                                     <i class="fas fa-utensils text-primary"></i> ${meal.name}
                                 </h5>
@@ -348,25 +370,6 @@
             
             // Scroll to results
             document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Add some sample ingredients for quick testing
-        document.addEventListener('DOMContentLoaded', function() {
-            const ingredientsInput = document.getElementById('ingredients');
-            const quickButtons = document.createElement('div');
-            quickButtons.className = 'mt-2';
-            quickButtons.innerHTML = `
-                <small class="text-muted">Quick examples: </small>
-                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="setIngredients('eggs, cheese, bread')">Breakfast</button>
-                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="setIngredients('chicken, rice, vegetables')">Dinner</button>
-                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="setIngredients('pasta, tomatoes, garlic')">Italian</button>
-                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setIngredients('ground beef, onions, potatoes')">Hearty</button>
-            `;
-            ingredientsInput.parentNode.appendChild(quickButtons);
-        });
-        
-        function setIngredients(ingredients) {
-            document.getElementById('ingredients').value = ingredients;
         }
     </script>
 </body>

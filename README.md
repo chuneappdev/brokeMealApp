@@ -1,4 +1,8 @@
-# Fridge to Fork �✨
+# Fridge 2 Plate 🍳✨
+
+A Flask web application that helps people discover delicious recipe ideas based on ingredients they already have in their fridge or pantry.ridge---
+
+Built with ❤️ for home cooks everywhere 👩‍🍳👨‍🍳 Fork �✨
 
 A Flask web application that helps people discover delicious recipe ideas based on ingredients they already have in their fridge or pantry.
 

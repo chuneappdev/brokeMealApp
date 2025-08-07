@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import openai
+from openai import OpenAI
 import os
 from dotenv import load_dotenv
 import json
@@ -8,8 +8,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Configure OpenAI API key
-openai.api_key = os.getenv('OPENAI_API_KEY')
+# Configure OpenAI client
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 # Fallback meal suggestions based on common ingredients
 FALLBACK_MEALS = [
@@ -28,7 +28,7 @@ FALLBACK_MEALS = [
 def generate_meal_suggestions_gpt(ingredients):
     """Generate meal suggestions using OpenAI GPT based on available ingredients"""
     try:
-        if not openai.api_key:
+        if not client.api_key:
             raise Exception("No OpenAI API key configured")
             
         prompt = f"""
@@ -52,7 +52,7 @@ def generate_meal_suggestions_gpt(ingredients):
         }}
         """
         
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful cooking assistant that suggests creative meals based on available ingredients."},
