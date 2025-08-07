@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
@@ -7,6 +7,11 @@ import json
 load_dotenv()
 
 app = Flask(__name__)
+
+# Configure for Railway deployment
+app.config['SERVER_NAME'] = None  # Let Railway handle the domain
+if os.getenv('RAILWAY_ENVIRONMENT') == 'production':
+    app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 # Configure OpenAI client
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
@@ -118,6 +123,29 @@ def get_meals():
 def health():
     return jsonify({'status': 'healthy'})
 
+@app.before_request
+def force_https():
+    """Force HTTPS on Railway production"""
+    if os.getenv('RAILWAY_ENVIRONMENT') == 'production':
+        if request.headers.get('X-Forwarded-Proto') == 'http':
+            return redirect(request.url.replace('http://', 'https://'), code=301)
+
+@app.after_request
+def after_request(response):
+    """Add security headers for production"""
+    if os.getenv('RAILWAY_ENVIRONMENT') == 'production':
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+    return response
+
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=os.getenv('FLASK_ENV') == 'development')
+    # Railway provides PORT environment variable
+    port = int(os.environ.get('PORT', 5001))  # Default to 5001 for local development
+    debug_mode = os.getenv('FLASK_ENV') == 'development' or os.getenv('RAILWAY_ENVIRONMENT') != 'production'
+    
+    print(f"Starting Fridge 2 Plate on port {port}")
+    if os.getenv('RAILWAY_ENVIRONMENT') == 'production':
+        print("Running in Railway production mode")
+    
+    app.run(host='0.0.0.0', port=port, debug=debug_mode)
