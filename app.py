@@ -129,6 +129,14 @@ def generate_meal_suggestions_gpt(ingredients):
 def index():
     return render_template('index.html')
 
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
 @app.route('/get_meals', methods=['POST'])
 def get_meals():
     try:
