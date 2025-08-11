@@ -137,6 +137,14 @@ def privacy():
 def terms():
     return render_template('terms.html')
 
+@app.route('/robots.txt')
+def robots():
+    return app.send_static_file('robots.txt')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return app.send_static_file('sitemap.xml')
+
 @app.route('/get_meals', methods=['POST'])
 def get_meals():
     try:

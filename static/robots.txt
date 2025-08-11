@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Allow AdSense crawler
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+Sitemap: https://web-production-40a36.up.railway.app/sitemap.xml
