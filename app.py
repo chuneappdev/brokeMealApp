@@ -69,23 +69,18 @@ def generate_meal_suggestions_gpt(ingredients):
             return FALLBACK_MEALS[:5]  # Return first 5 fallback meals
             
         prompt = f"""
-        I have these ingredients available in my fridge/pantry: {', '.join(ingredients) if ingredients else 'basic pantry staples like salt, pepper, oil'}.
+        I have these ingredients available: {', '.join(ingredients) if ingredients else 'basic pantry staples'}.
         
-        Please suggest 5 delicious meal ideas I can make with these ingredients. For each meal, provide:
-        1. Name of the dish
-        2. Complete ingredient list (using what I have + basic pantry staples)
-        3. Brief cooking instructions for the main display
-        4. Detailed step-by-step cooking instructions for copying (include prep time, cook time, serving size, tips)
+        Please suggest exactly 5 meal ideas I can make with these ingredients. 
         
-        Focus on practical, tasty meals that someone can actually make with these ingredients. Be creative with combinations.
-        Format as JSON with this structure:
+        IMPORTANT: Respond ONLY with valid JSON in this exact format (no extra text):
         {{
             "meals": [
                 {{
                     "name": "dish name",
                     "ingredients": ["ingredient1", "ingredient2"],
                     "instructions": "brief cooking instructions for display",
-                    "detailed_instructions": "detailed step-by-step instructions with prep time, cook time, serving size, and helpful tips"
+                    "detailed_instructions": "Prep Time: X minutes | Cook Time: X minutes | Serves: X\\n\\n1. Step one\\n2. Step two\\n3. Step three\\n\\nTip: helpful cooking tip"
                 }}
             ]
         }}
@@ -94,26 +89,41 @@ def generate_meal_suggestions_gpt(ingredients):
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a professional chef assistant that provides detailed, easy-to-follow cooking instructions. Always include prep time, cook time, serving size, and helpful tips in your detailed instructions."},
+                {"role": "system", "content": "You are a helpful cooking assistant. Respond ONLY with valid JSON in the exact format requested. No additional text or explanations."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=2500,
+            max_tokens=2000,
             temperature=0.7
         )
         
-        content = response.choices[0].message.content
+        content = response.choices[0].message.content.strip()
+        print(f"OpenAI Response: {content[:200]}...")  # Debug print
+        
+        # Clean up common JSON issues
+        if content.startswith('```json'):
+            content = content.replace('```json', '').replace('```', '').strip()
+        elif content.startswith('```'):
+            content = content.replace('```', '').strip()
+            
         # Try to parse JSON from the response
         try:
             result = json.loads(content)
-            return result.get("meals", [])
-        except json.JSONDecodeError:
-            # If JSON parsing fails, use fallback
+            meals = result.get("meals", [])
+            if len(meals) > 0:
+                print(f"Successfully got {len(meals)} AI-generated meals")
+                return meals
+            else:
+                raise Exception("No meals in response")
+        except json.JSONDecodeError as e:
+            print(f"JSON parsing error: {e}")
+            print(f"Raw content: {content}")
             raise Exception("Invalid JSON response from API")
             
     except Exception as e:
         print(f"Error with OpenAI API: {e}")
+        print("Falling back to predefined suggestions")
         # Fall back to predefined suggestions
-        return FALLBACK_MEALS
+        return FALLBACK_MEALS[:5]
 
 @app.route('/')
 def index():
