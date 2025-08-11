@@ -145,6 +145,10 @@ def robots():
 def sitemap():
     return app.send_static_file('sitemap.xml')
 
+@app.route('/ads.txt')
+def ads_txt():
+    return app.send_static_file('ads.txt')
+
 @app.route('/get_meals', methods=['POST'])
 def get_meals():
     try:
