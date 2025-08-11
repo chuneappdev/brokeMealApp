@@ -8,4 +8,4 @@ Allow: /
 User-agent: AdsBot-Google
 Allow: /
 
-Sitemap: https://fridge2plate.com/sitemap.xml
+Sitemap: https://web-production-40a36.up.railway.app/sitemap.xml
